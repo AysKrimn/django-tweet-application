@@ -103,7 +103,55 @@
 
     padding: 1rem;
 }
-/* a.dropdown-item.active {
 
-    background-color: red !important;
-} */
+footer {
+
+    position: relative;
+    width: 100%;
+    bottom: -16px;
+    min-height: 150px;
+}
+
+
+footer ul {
+
+    color: white;
+}
+
+footer ul li a {
+
+    color: inherit;
+    transition: 0.3s;
+}
+
+
+footer a:hover {
+
+    color: rgb(52, 52, 231);
+    text-decoration: none;
+}
+
+
+footer .copy {
+
+    background-color:#141414;
+
+}
+
+footer .footer-logo img {
+
+    border: 1px solid #5d5858;
+    width: 100%;
+}
+
+.copy p {
+
+    margin: 0;
+    padding: 1rem;
+
+    a {
+
+        color: white;
+    }
+}
+
