@@ -88,7 +88,7 @@
                         <img src="{% static 'Images/defaultAvatar.png' %}" alt="Avatar">
                     </div>
         
-                    <a href="{% url 'user-view' request.user.id %}">{{tweet.author.username}}</a>
+                    <a href="{% url 'user-view' tweet.author.id %}">{{tweet.author.username}}</a>
         
          
 

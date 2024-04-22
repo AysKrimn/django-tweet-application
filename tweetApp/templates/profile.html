@@ -5,6 +5,7 @@
 {% block site-icerik %}
 
 
+    <!-- back btn -->
     <div class="mb-3">
         <a href="{% url 'index-view' %}">
             <ion-icon size="large" name="arrow-back-outline"></ion-icon>
@@ -12,6 +13,7 @@
         </a>
     </div>
 
+    <!-- user profile banner -->
     <div class="d-flex align-items-center avatar-container">
           
   
@@ -19,7 +21,7 @@
             <img src="{% static 'Images/defaultAvatar.png' %}" alt="Avatar">
         </div>
 
-        <a href="{% url 'user-view' request.user.id %}">{{user.username}}</a>
+        <a href="{% url 'user-view' user.id %}">{{user.username}}</a>
 
     </div>
 
@@ -72,7 +74,7 @@
                         <img src="{% static 'Images/defaultAvatar.png' %}" alt="Avatar">
                     </div>
         
-                    <a href="{% url 'user-view' request.user.id %}">{{tweet.author.username}}</a>
+                    <a href="{% url 'user-view' tweet.author.id %}">{{tweet.author.username}}</a>
         
          
 

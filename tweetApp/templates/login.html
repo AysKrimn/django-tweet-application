@@ -5,10 +5,10 @@
   Giriş Yap
 {% endblock site-title %}
 
-{% block site-icerik %}
+
+{% block main-layout %}
 
 <div class="container">
-
 
 {% if error %}
   <p class="text-danger">{{error}}</p>
@@ -37,4 +37,5 @@
 
 
 </div>
-{% endblock site-icerik %}
+
+{% endblock main-layout %}
