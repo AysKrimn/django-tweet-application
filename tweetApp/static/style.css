@@ -1,0 +1,109 @@
+.heart {
+    font-size: 21px;
+    cursor: pointer;
+}
+
+
+.dropdown-menu[data-bs-popper] {
+
+    left: -85px !important;
+}
+
+#userInfo:hover {
+
+    color: inherit !important;
+}
+
+
+.post-container {
+
+    border: 1px solid #e7dfdf;
+    padding: 7px;
+    border-radius: 5px;
+}
+
+.post-container textarea {
+
+    resize: none;
+}
+
+.post-card {
+
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 8px;
+}
+
+
+.post-card button {
+
+    border: none;
+}
+
+.avatar-container {
+
+    border: 1px solid #dbd8d8;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    padding: 1px;
+}
+.avatar-container img {
+
+    max-width: 60px;
+}
+
+
+.right-side, .left-side {
+
+    min-height: 100vh;
+}
+
+
+.left-side {
+
+    border-left: 1px solid gainsboro;
+}
+
+.right-side {
+
+    border-right: 1px solid gainsboro;
+}
+
+.profile-edit {
+
+    margin-right: 1rem;
+}
+
+.profile-edit ion-icon {
+
+    cursor: pointer;
+    color: orange;
+    font-size: large;
+
+}
+
+
+.card-body.tweet-body {
+
+    padding: 5px;
+}
+
+.card-body.tweet-body .avatar-container {
+
+    border: none;
+}
+
+.card-body .tweet-text {
+
+    margin-left: 1rem;
+}
+
+.card-body .tweet-footer {
+
+    padding: 1rem;
+}
+/* a.dropdown-item.active {
+
+    background-color: red !important;
+} */

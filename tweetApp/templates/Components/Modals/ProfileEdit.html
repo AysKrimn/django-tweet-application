@@ -1,0 +1,47 @@
+<div class="modal fade" id="edit-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Profilimi Düzenle</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <form action="{% url 'edit-view' %}" method="post">
+
+        {% csrf_token %}
+
+        <div class="modal-body">
+         
+                {{form}}
+
+                <hr>
+
+                <div>
+                    <h1 class="fs-5">Avatar</h1>
+                    <input type="file">
+                </div>
+
+                <hr>
+
+                <div>
+                        <h1 class="fs-5">Parola</h1>
+
+                        <label for="oldPass">Eski Şifre:</label>
+                        <input id="oldPass" name="old_password" type="password" placeholder="Eski Şifre">
+                        
+                        <label for="newPass">Yeni Şifre:</label>
+                        <input id="newPass" name="new_password" type="password" placeholder="Yeni Şifre">
+                </div>
+
+      
+        </div>
+
+            <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Değişiklikleri Kaydet</button>
+            </div>
+    
+        </form>
+
+      </div>
+    </div>
+  </div>

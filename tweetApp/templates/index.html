@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block site-title %}
+  AnaSayfa
+{% endblock site-title %}
+
+
+
+{% block site-icerik %}
+
+    {% if request.user.is_authenticated %}
+    <div class="mb-4 post-container">
+
+        {% if error %}
+        <div class="alert alert-danger" role="alert">
+         {{error}}
+        </div>
+        {% endif %}
+
+        <div class="d-flex align-items-center avatar-container">
+          
+  
+            <div>
+                <img src="{% static 'Images/defaultAvatar.png' %}" alt="Avatar">
+            </div>
+
+            <a href="{% url 'user-view' request.user.id %}">{{request.user.username}}</a>
+
+        </div>
+
+        <form action="{% url 'index-view' %}" method="post">
+            {% csrf_token %}
+            <textarea required name="tweetContent" class="form-control" placeholder="Neler oluyor?"></textarea>
+
+            <div class="post-card">
+              <input name="tweetAttachment" class="form-control" type="file">
+              <button type="submit" class="form-control btn btn-success">Tweetle</button>
+            </div>
+
+        </form>
+
+    </div>
+    {% endif %}
+
+
+    {% for id, tweet in tweets.items %}
+
+    <div class="modal fade" id="tweet-{{id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">{{tweet.author.username}} gönderisini düzenliyorsunuz</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <form action="{% url 'update-tweet-view' id %}" method="post">
+
+          {% csrf_token %}
+
+          <div class="modal-body">
+              <div class="mb-3">
+                <textarea name="newContent" class="form-control">{{tweet.tweet}}</textarea>
+              </div>
+
+          </div>
+          <div class="modal-footer">
+       
+            <button type="submit" class="btn btn-primary">Güncelle</button>
+          </div>
+        </form>
+
+        </div>
+      </div>
+    </div>
+
+
+    <!-- POSTS -->
+    <div class="card mb-4">
+
+              <div class="card-body tweet-body">
+
+
+                  <div class="d-flex align-items-center avatar-container">
+          
+  
+                    <div>
+                        <img src="{% static 'Images/defaultAvatar.png' %}" alt="Avatar">
+                    </div>
+        
+                    <a href="{% url 'user-view' request.user.id %}">{{tweet.author.username}}</a>
+        
+         
+
+
+
+                  {% if request.user.is_authenticated and request.user.is_superuser or request.user.id == tweet.author.id %}
+                  
+                      <div class="dropdown ms-auto">
+                        <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                        
+                        <ul class="dropdown-menu">
+                          <li> <button class="dropdown-item text-primary" data-bs-toggle="modal" data-bs-target="#tweet-{{id}}">Güncelle</button>  </li>
+                          <li> <a class="dropdown-item text-danger" href="{% url 'delete-tweet-view' id %}">Sil</a> </li>
+                        
+                        </ul>
+                      </div>
+                  {% endif %}
+
+                </div>
+
+
+                <p class="card-text tweet-text">{{tweet.tweet}}</p>
+
+                <div class="mt-3 d-flex tweet-footer">
+                  <!-- <ion-icon name="heart-sharp"></ion-icon> -->
+
+                  <ion-icon class="heart" name="heart-outline"></ion-icon>
+                  <small class="ms-auto text-muted">• {{tweet.createdAt}}</small>
+                </div>
+
+              </div>
+        
+          </div>
+
+
+  {% endfor %}
+
+
+
+
+
+
+{% endblock site-icerik %}
