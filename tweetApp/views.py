@@ -17,10 +17,15 @@ def Anasayfa(request):
     tweets = TweetModel.objects.all().order_by("-createdAt")
     
     for tweet in tweets:
+        tweetInstances[tweet.id] = {
+            
+            "data": tweet,
+        }
 
-        tweetInstances[tweet.id] = tweet
-        # 1: { name: ömer, post: dünya, likes: 12},
-        # 2: {name: muhammed, post: csgo, likes 15}
+        if request.user.is_authenticated:
+
+            tweetInstances[tweet.id].setdefault("isLiked", TweetLikes.objects.filter(post_id = tweet.id, user = request.user).exists())
+
     else:
         context["tweets"] = tweetInstances
         

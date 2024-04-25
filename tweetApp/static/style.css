@@ -41,6 +41,20 @@
     border: none;
 }
 
+
+.avatar-banner {
+
+    background-color: transparent;
+}
+
+
+
+
+.current-user-avatar-container {
+
+    padding: 3px;
+}
+
 .avatar-container {
 
     border: 1px solid #dbd8d8;
@@ -48,11 +62,12 @@
     margin-bottom: 5px;
     padding: 1px;
 }
+
 .avatar-container img {
 
     max-width: 60px;
+    border-radius: 50%;
 }
-
 
 .right-side, .left-side {
 
@@ -103,6 +118,15 @@
 
     padding: 1rem;
 }
+
+
+.like-container {
+
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
 
 footer {
 

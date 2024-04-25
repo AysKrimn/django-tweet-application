@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path
 
 from tweetApp.views import *
+from tweetAPI.views import Begen
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,5 +29,9 @@ urlpatterns = [
     path("users/<userId>", ProfilDetay, name="user-view"),
     path("giris-yap", GirisYap, name="login-view"),
     path("cikis-yap", CikisYap, name="logout-view"),
-    path("kayit-ol", KayitOl, name="register-view")
+    path("kayit-ol", KayitOl, name="register-view"),
+
+
+    # API ENDPOINTS
+    path("api/tweet/<tweetId>/begen", Begen, name="tweet-like-view"),
 ]
