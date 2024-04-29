@@ -48,11 +48,41 @@
 }
 
 
+.user-information-container {
+
+    margin-left: 8px;
+    margin-top: 8px;
+}
+
+.user-information-container hr {
+
+    margin: 0;
+    margin-bottom: 8px;
+    margin-top: 8px;
+}
+
+.user-information-container p {
+
+    margin: 0;
+    margin-bottom: 3px;
+}
 
 
 .current-user-avatar-container {
 
-    padding: 3px;
+    padding: 8px;
+}
+
+.tweet-attachment {
+
+    padding: 1rem;
+}
+
+.tweet-attachment img {
+
+    width: 100%;
+    max-height: 400px;
+    object-fit: contain;
 }
 
 .avatar-container {
@@ -60,13 +90,25 @@
     border: 1px solid #dbd8d8;
     border-radius: 5px;
     margin-bottom: 5px;
-    padding: 1px;
+    padding: 8px;
+    gap: 8px;
+}
+
+
+.username {
+
+    text-transform: capitalize;
+    text-decoration: none;
 }
 
 .avatar-container img {
 
     max-width: 60px;
     border-radius: 50%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    min-height: 50px;
+    max-height: 50px;
 }
 
 .right-side, .left-side {
@@ -120,13 +162,72 @@
 }
 
 
-.like-container {
+.tweet-footer-container {
 
     display: flex;
     align-items: center;
     gap: 5px;
 }
 
+.tweet-footer-container ion-icon {
+
+    font-size: 21px;
+    cursor: pointer;
+}
+
+
+.like-container, .comment-container {
+
+
+    display: flex;
+    gap: 3px;
+    height: 30px;
+    align-items: center;
+
+    border: 1px solid #97afcd;
+    border-radius: 10px;
+    padding: 9px;
+}
+
+
+
+form .comment-wrapper {
+
+    padding: 10px;
+    border: 1px solid #cecece;
+    border-radius: 10px;
+    flex: 1;
+    gap: 5px;
+}
+
+
+form .comment-wrapper ion-icon {
+
+    font-size: 21px;
+    cursor: pointer;
+    color: #5280ff;
+}
+
+form .comment-field {
+
+    flex: 1;
+}
+form .comment-wrapper .comment-field textarea {
+
+    margin-bottom: 0px !important;
+    resize: none;
+    border: none;
+    transition: 0.5s;
+}
+
+
+form .comment-wrapper .comment-field textarea:focus {
+
+    border: 1px solid rgb(66, 152, 233);
+    outline: none;
+    box-shadow: none;
+    background-color: rgb(247 247 247);
+}
 
 footer {
 

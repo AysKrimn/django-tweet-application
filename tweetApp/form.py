@@ -1,13 +1,13 @@
 from django import forms
 # user model
-from django.contrib.auth.models import User
+from .models import TweetUser
 
 # form validation
 class UserProfile(forms.ModelForm):
 
     class Meta:
-        model = User
-        fields = ["username", "email"]
+        model = TweetUser
+        fields = ["username", "email", "avatar"]
         help_texts = {
 
             "username": None

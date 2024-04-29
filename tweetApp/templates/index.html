@@ -22,14 +22,14 @@
           
   
             <div>
-                <img src="{% static 'Images/defaultAvatar.png' %}" alt="Avatar">
+                <img src="{{request.user.avatar.url}}" alt="Avatar">
             </div>
 
-            <a href="{% url 'user-view' request.user.id %}">{{request.user.username}}</a>
+            <a class="username" href="{% url 'user-view' request.user.id %}">{{request.user.username}}</a>
 
         </div>
 
-        <form action="{% url 'index-view' %}" method="post">
+        <form action="{% url 'index-view' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <textarea required name="tweetContent" class="form-control" placeholder="Neler oluyor?"></textarea>
 
@@ -85,10 +85,10 @@
           
   
                     <div>
-                        <img src="{% static 'Images/defaultAvatar.png' %}" alt="Avatar">
+                        <img src="{{tweet.data.author.avatar.url}}" alt="Avatar">
                     </div>
         
-                    <a href="{% url 'user-view' tweet.data.author.id %}">{{tweet.data.author.username}}</a>
+                    <a class="username" href="{% url 'user-view' tweet.data.author.id %}">{{tweet.data.author.username}}</a>
         
          
 
@@ -112,15 +112,29 @@
 
                 <p class="card-text tweet-text">{{tweet.data.tweet}}</p>
 
+
+                {% if tweet.data.attachment %}
+
+                <div class="tweet-attachment">
+
+                    <a href="{{tweet.data.attachment.url}}" target="_blank">
+                      <img src="{{tweet.data.attachment.url}}" alt="tweet-attachment">
+                    </a>
+                    
+                </div>
+                  
+                {% endif %}
+
                 <div class="mt-3 d-flex tweet-footer">
                   <!-- <ion-icon name="heart-sharp"></ion-icon> -->
 
                   {% if request.user.is_authenticated %}
                     
                  
-                  <div class="like-container">
+                  <div class="tweet-footer-container">
                   
-      
+                    <div class="like-container">
+
                     <ion-icon onclick="make_api_request(event, '{{tweet.data.id}}')" 
                     class="heart" 
                     
@@ -136,11 +150,43 @@
        
                     
                     <span>{{tweet.data.show_likes}}</span>
+                    </div>
+
+
+                    <div class="comment-container">
+                        <ion-icon name="arrow-redo-outline"></ion-icon>
+                        <span>3</span>
+                    </div>
+              
+
+             
                   </div>
                   {% endif %}
                   
                   <small class="ms-auto text-muted">• {{tweet.data.createdAt}}</small>
                 </div>
+
+                <!-- comment alanı -->
+
+                <form action="">
+
+                  <div class="d-flex align-items-center comment-wrapper">
+
+                     <div class="comment-field">
+
+                        <textarea class="form-control" placeholder="Yanıt ver"></textarea>
+                    </div>
+
+
+                    <div>
+                        <ion-icon name="send-sharp"></ion-icon>
+                    </div>
+          
+                  </div>
+        
+
+
+                </form>
 
               </div>
         
@@ -152,36 +198,7 @@
 
 
 
-  <script>
-
-   const make_api_request = async (event, tweetId) => {
-
-          const request = await fetch(`http://127.0.0.1:8000/api/tweet/${tweetId}/begen`)
-          const response = await request.json()
-
-          const heartIcon = event.target
-          const likeCount = heartIcon.nextElementSibling
-       
-          if (response.api_message.status === "Like Eklendi") {
-
-              // kalp ikonu güncelle 
-              // sayacı güncelle
-              heartIcon.name = "heart-sharp"
-              likeCount.innerText = response.api_message.total_likes
-
-          } else if (response.api_message.status === "Unlike Yapıldı") {
-
-              heartIcon.name = "heart-outline"
-              likeCount.innerText = response.api_message.total_likes
-          } else {
-
-            alert("Bir hata meydana geldi lütfen daha sonra tekrar dene.")
-          }
-
-          console.log("API DAN GELEN RESPONSE:", response)
-   }
-
-  </script>
+ <script src="{% static 'Scripts/api_request.js' %}"></script>
 
 
 

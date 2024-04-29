@@ -17,6 +17,8 @@ def Anasayfa(request):
     tweets = TweetModel.objects.all().order_by("-createdAt")
     
     for tweet in tweets:
+
+        print("tweet:", tweet.tweet, "yorum:", tweet.comments.all())
         tweetInstances[tweet.id] = {
             
             "data": tweet,
@@ -27,10 +29,13 @@ def Anasayfa(request):
             tweetInstances[tweet.id].setdefault("isLiked", TweetLikes.objects.filter(post_id = tweet.id, user = request.user).exists())
 
     else:
+        # döngü bittiginde calisan else
         context["tweets"] = tweetInstances
-        
+    
         if request.user.is_authenticated:
             context["form"] = UserProfile(instance=request.user)
+            # userin toplam tweet sayısı
+            context["user_tweets_count"] = tweets.filter(author = request.user).count()
 
     # Şu anki zamanı al
     now = datetime.now()
@@ -45,12 +50,15 @@ def Anasayfa(request):
     if request.method == 'POST':
         
            tweetContent = request.POST.get('tweetContent')
-           tweetAttachment = request.POST.get('tweetAttachment')
+           tweetAttachment = request.FILES.get('tweetAttachment')
 
            if tweetContent:
-               TweetModel.objects.create(author=request.user, tweet=tweetContent)
-           elif tweetContent and tweetAttachment:
-               TweetModel.objects.create(author=request.user, tweet=tweetContent, attachment=tweetAttachment)
+               
+               if tweetAttachment:
+                   
+                    TweetModel.objects.create(author=request.user, tweet=tweetContent, attachment=tweetAttachment)
+               else:
+                    TweetModel.objects.create(author=request.user, tweet=tweetContent)
            else:
                # bir şeyler ters gitmiştir
                context['error'] = "Birşeyler ters gitti lütfen daha sonra tekrar dene."
@@ -67,15 +75,27 @@ def AnaSayfa_POST(request):
 
     if request.method == 'POST':
 
-        form = UserProfile(request.POST, instance=request.user)
-
-        if form.is_valid():
-
-            form.save()
-
-        # şifreleri değiştir
+        # username ve email al
+        username = request.POST.get("username")
+        email = request.POST.get("email")
+        # avatar al
+        avatar = request.FILES.get("avatar")
+        # şifreleri al
         oldPassword = request.POST.get('old_password')
         newPassword = request.POST.get('new_password')
+        avatar = request.FILES.get('avatar')
+
+        if username:
+
+            request.user.username = username
+
+        if email:
+
+            request.user.email = email
+
+        if avatar:
+
+            request.user.avatar = avatar
 
         if oldPassword and newPassword:
 
@@ -88,14 +108,19 @@ def AnaSayfa_POST(request):
 
             # yeni şifreyi belirle
             request.user.set_password(newPassword)
-            # user modelini kaydet
-            request.user.save()
             print("[USER EDIT ENPOINT]: Şifre değişti")
-            return redirect("index-view")
+
+
+        # user modelini kaydet
+        request.user.save()
+
+        # anasayfaya yönlendir
+        return redirect('index-view')
 
 # tweeet güncelleme
 def TweetGuncelle(request, tweetId):
 
+    print("GELEN İD:", tweetId)
     # kullanıcı giriş yapmamışsa engelle
     if request.user.is_authenticated == False:
 
@@ -106,19 +131,21 @@ def TweetGuncelle(request, tweetId):
         tweet = TweetModel.objects.filter(id = tweetId).first()
 
         if tweet is None:
+            print("Tweet bulunamadı.")
             return redirect('index-view')
         
         
         # yetki kontrol
-        if request.user.is_superuser == False or request.user.id != tweet.author.id:
+        if request.user.is_superuser or request.user.id == tweet.author.id:
 
+            newTweet = request.POST.get('newContent')
+            tweet.tweet = newTweet
+            tweet.save()
             return redirect("index-view")
         
-        newTweet = request.POST.get('newContent')
-        tweet.tweet = newTweet
-        tweet.save()
-
-        return redirect("index-view")
+        else:
+            print("rütbe yok")
+            return redirect("index-view")
         
     else:
         # get istekleri icin hep anasayfaya yonlendşir
@@ -241,8 +268,17 @@ def ProfilDetay(request, userId):
     usersTweets = TweetModel.objects.filter(author = requestedUser)
 
     for tweet in usersTweets:
-        tweetInstances[tweet.id] = tweet
+        tweetInstances[tweet.id] = {
 
+           "data": tweet,
+        }
+
+
+    if request.user.is_authenticated:
+
+            tweetInstances[tweet.id].setdefault("isLiked", TweetLikes.objects.filter(post_id = tweet.id, user = request.user).exists())
+    
+    
     context['tweets'] = tweetInstances
     
     return render(request, "profile.html", context)

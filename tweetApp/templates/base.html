@@ -32,7 +32,7 @@
 
             <div class="row">
                     <!-- sağ taraf -->
-                    <div class="col-3 right-side">
+                    <div class="col-12 col-md-3 right-side">
 
                         <h5 class="text-center">Profilim</h5>
                         <hr>
@@ -44,12 +44,12 @@
                             <div class="avatar-banner d-flex align-items-center">
                         
                                 <div class="current-user-avatar-container">
-                                    <img src="{% static 'Images/defaultAvatar.png' %}" alt="Avatar">
+                                    <img src="{{request.user.avatar.url}}" alt="Avatar">
                                     
                                 </div>
 
                                 <div class="w-100">
-                                    <a href="{% url 'user-view' request.user.id %}">{{request.user.username}}</a>
+                                    <a class="username" href="{% url 'user-view' request.user.id %}">{{request.user.username}}</a>
                                 
                                 </div>
 
@@ -62,16 +62,14 @@
 
 
                             <!-- ek bilgiler -->
-                            <div class="d-flex align-items-end justify-content-end me-3 mt-3" style="gap: 7px;">
-                            <p class="me-auto ms-1"> <span class="text-muted">Katıldı:</span> <br> <small class="text-muted">{{request.user.date_joined}}</small> </p>
-                            
-                            
-                            <p class="text-muted">
-                        
-                                <span>Likes: 12</span>
-                                <span>Tweets: 123</span>
+                            <div class="user-information-container text-muted">
 
-                            </p>
+                                <p>Tweets: {{user_tweets_count}}</p>
+                                <p>Likes: 12</p>
+                                <p>Takipçiler: {{request.user.followers.count}}</p>
+
+                                <hr>
+                                <p>Katıldı: {{request.user.date_joined}}</p>
                             </div>
                          </div>
 
@@ -88,7 +86,7 @@
                     </div>
 
 
-                    <div class="col-6">
+                    <div class="col-12 col-md-6">
 
                             {% block site-icerik %}
                             
@@ -97,7 +95,7 @@
                     </div>
 
                     
-                    <div class="col-3 left-side">
+                    <div class="col-12 col-md-3 left-side">
 
                         <h5 class="text-center">Toplulukta Yeni Olan Kişiler</h5>
                         <hr>
@@ -110,7 +108,7 @@
                               <img src="{% static 'Images/defaultAvatar.png' %}" alt="Avatar">
                           </div>
                     
-                          <a href="{% url 'user-view' user.id %}">{{user.username}}</a>
+                          <a class="username" href="{% url 'user-view' user.id %}">{{user.username}}</a>
                         </div>
                     
                         {% endfor %}
@@ -165,7 +163,7 @@
 
 
 
-        <div class="col-3">
+        <div class="col-12 col-md-3">
 
             <ul>
                      <h4 class="text-center">S.S.S</h4>

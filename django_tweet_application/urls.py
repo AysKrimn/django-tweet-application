@@ -20,6 +20,11 @@ from django.urls import path
 from tweetApp.views import *
 from tweetAPI.views import Begen
 
+
+# django config ayarları
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", Anasayfa, name="index-view"),
@@ -34,4 +39,6 @@ urlpatterns = [
 
     # API ENDPOINTS
     path("api/tweet/<tweetId>/begen", Begen, name="tweet-like-view"),
-]
+
+    
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
