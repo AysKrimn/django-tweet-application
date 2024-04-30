@@ -109,22 +109,24 @@
 
                 </div>
 
+                   <div class="data-wrap" onclick="navigateToDetail(event, '{{tweet.data.id}}')">
+                      <p class="card-text tweet-text">{{tweet.data.tweet}}</p>
 
-                <p class="card-text tweet-text">{{tweet.data.tweet}}</p>
 
+                      {% if tweet.data.attachment %}
 
-                {% if tweet.data.attachment %}
+                      <div class="tweet-attachment">
 
-                <div class="tweet-attachment">
+                          <a href="{{tweet.data.attachment.url}}" target="_blank">
+                            <img src="{{tweet.data.attachment.url}}" alt="tweet-attachment">
+                          </a>
+                          
+                      </div>
+                        
+                      {% endif %}
 
-                    <a href="{{tweet.data.attachment.url}}" target="_blank">
-                      <img src="{{tweet.data.attachment.url}}" alt="tweet-attachment">
-                    </a>
-                    
-                </div>
-                  
-                {% endif %}
-
+                  </div>
+     
                 <div class="mt-3 d-flex tweet-footer">
                   <!-- <ion-icon name="heart-sharp"></ion-icon> -->
 
@@ -200,7 +202,23 @@
 
  <script src="{% static 'Scripts/api_request.js' %}"></script>
 
+  <script>
 
+
+function navigateToDetail(event, tweetId) {
+
+
+      // console.log("tıklanan eleman:",event.target.localName)
+
+      if (event.target.localName === "img") {
+           return
+      }
+
+      window.location.href = `/tweet/${tweetId}`
+
+}
+
+  </script>
 
 
 {% endblock site-icerik %}

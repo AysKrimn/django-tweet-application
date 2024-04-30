@@ -177,6 +177,59 @@ def TweetSil(request, tweetId):
         return redirect("index-view")
 
 
+def TweetDetay(request, tweetId):
+
+    context = {}
+
+    try:
+
+        tweet = TweetModel.objects.filter(id = int(tweetId)).first()
+
+        if tweet is None:
+            # eğer böyle bi tweet yoksa
+            return redirect("index-view")
+        
+        context["tweet"] = {
+
+            "data": tweet
+        }
+    except:
+        return redirect("index-view")
+    
+
+    return render(request, "TweetDetail.html", context)
+
+
+# yorum yapma alanı
+def TweetYorum(request, tweetId):
+
+
+    if request.method == "POST":
+
+        try:
+            # böyle bit tweet varmı?
+            tweet = TweetModel.objects.filter(id = int(tweetId)).first()
+
+            if tweet is None:
+                return redirect("index-view")
+            
+            comment = request.POST.get("comment-input")
+
+            TweetCommentModel.objects.create(author = request.user, post = tweet, message = comment)
+
+            return redirect("tweet-detail-view", tweet.id)
+
+        except:
+             return redirect("index-view")
+        
+    else:
+
+        return redirect("index-view")
+        
+
+
+
+# yetkilendirme işlemleri burada başlar
 def GirisYap(request):
     context = {}
 

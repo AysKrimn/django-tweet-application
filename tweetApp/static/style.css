@@ -1,8 +1,39 @@
 .heart {
     font-size: 21px;
     cursor: pointer;
+    color: #cd2828;
 }
 
+.sticky-side {
+
+    position: sticky;
+    top: 40px;
+}
+
+.tweet-comment-wrapper .avatar-container {
+
+    border: none;
+    padding: 12px;
+}
+
+.tweet-comment-wrapper .tweet-comment {
+
+    padding-left: 1rem;
+}
+
+.back-container {
+
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.backBtn {
+
+    font-size: xx-large;
+    color: #212529;
+    cursor: pointer;
+}
 
 .dropdown-menu[data-bs-popper] {
 
@@ -189,7 +220,10 @@
     padding: 9px;
 }
 
+.data-wrap {
 
+    cursor: pointer;
+}
 
 form .comment-wrapper {
 
