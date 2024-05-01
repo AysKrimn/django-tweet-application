@@ -8,7 +8,6 @@ from .models import TweetUser as User
 from .form import UserProfile
 
 # utils
-from datetime import datetime, timedelta
 # Create your views here.
 def Anasayfa(request):
     context = {}
@@ -34,17 +33,6 @@ def Anasayfa(request):
     
         if request.user.is_authenticated:
             context["form"] = UserProfile(instance=request.user)
-            # userin toplam tweet sayısı
-            context["user_tweets_count"] = tweets.filter(author = request.user).count()
-
-    # Şu anki zamanı al
-    now = datetime.now()
-
-    # 24 saat öncesini hesapla
-    start_time = now - timedelta(days=1)
-    
-    new_users = User.objects.filter(date_joined__gte=start_time, date_joined__lt=now)
-    context["recent_users"] = new_users
 
 
     if request.method == 'POST':
@@ -305,14 +293,6 @@ def KayitOl(request):
 def ProfilDetay(request, userId):
     context = {}
     tweetInstances = {}
-    # Şu anki zamanı al
-    now = datetime.now()
-
-    # 24 saat öncesini hesapla
-    start_time = now - timedelta(days=1)
-    
-    new_users = User.objects.filter(date_joined__gte=start_time, date_joined__lt=now)
-    context["recent_users"] = new_users
 
     requestedUser = User.objects.filter(id = int(userId)).first()
     context["user"] = requestedUser
