@@ -10,6 +10,11 @@ Basit, çeşitli özellikler sunan insanların **X** uygulamasın da olduğu gib
 # Önizlemeler
 ![image](https://github.com/AysKrimn/django-tweet-application/assets/83617943/6fd083c1-f74d-44b2-917e-38314be3a7c8)
 
+![image](https://github.com/AysKrimn/django-tweet-application/assets/83617943/0d0492cb-46e6-4264-8bb6-c6c11c443f12)
+
+![image](https://github.com/AysKrimn/django-tweet-application/assets/83617943/00f791f1-70c4-40b3-b801-1c1fc7a2aaa6)
+
+
 Profil kısmı
 
 ![image](https://github.com/AysKrimn/django-tweet-application/assets/83617943/dbfe2a16-e434-420f-8995-9702d5d79856)
