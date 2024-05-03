@@ -15,7 +15,7 @@ def Anasayfa(request):
     tweetInstances = {}
 
     tweets = TweetModel.objects.all().order_by("-createdAt")
-    
+
     for tweet in tweets:
 
         print("tweet:", tweet.tweet, "yorum:", tweet.comments.all())
@@ -34,17 +34,6 @@ def Anasayfa(request):
     
         if request.user.is_authenticated:
             context["form"] = UserProfile(instance=request.user)
-            # userin toplam tweet sayısı
-            context["user_tweets_count"] = tweets.filter(author = request.user).count()
-
-    # Şu anki zamanı al
-    now = datetime.now()
-
-    # 24 saat öncesini hesapla
-    start_time = now - timedelta(days=1)
-    
-    new_users = User.objects.filter(date_joined__gte=start_time, date_joined__lt=now)
-    context["recent_users"] = new_users
 
 
     if request.method == 'POST':
@@ -305,17 +294,12 @@ def KayitOl(request):
 def ProfilDetay(request, userId):
     context = {}
     tweetInstances = {}
-    # Şu anki zamanı al
-    now = datetime.now()
-
-    # 24 saat öncesini hesapla
-    start_time = now - timedelta(days=1)
-    
-    new_users = User.objects.filter(date_joined__gte=start_time, date_joined__lt=now)
-    context["recent_users"] = new_users
 
     requestedUser = User.objects.filter(id = int(userId)).first()
+    totalBans = BanRecord.objects.filter(suspect = requestedUser).count()
+
     context["user"] = requestedUser
+    context["ban_count"] = totalBans
 
     # ilgili userin göndermiş oldugu tweetler
     usersTweets = TweetModel.objects.filter(author = requestedUser)
@@ -335,3 +319,28 @@ def ProfilDetay(request, userId):
     context['tweets'] = tweetInstances
     
     return render(request, "profile.html", context)
+
+
+
+# user ban
+def ProfilYasakla(request, userId):
+
+    if request.method == "POST":
+
+        ban_reason = request.POST.get("ban_reason")
+
+        user = User.objects.filter(id = int(userId)).first()
+
+        if user.isBanned is False:
+
+            user.isBanned = True
+            # user modelini kaydet
+            user.save()
+            # ban kaydı oluştur
+            BanRecord.objects.create(authorized = request.user, suspect = user, reason = ban_reason)
+
+            return redirect("user-view", userId)
+
+    else:
+
+        return redirect("index-view")

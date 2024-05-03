@@ -1,5 +1,6 @@
-from django.shortcuts import render
 from .models import TweetLikes
+from tweetApp.models import TweetUser as User
+from tweetApp.models import UserFollowers
 
 # JSON kütüphanesi
 from django.http import JsonResponse
@@ -51,4 +52,54 @@ def Begen(request, tweetId):
 
 
     # JSON mesaj dön
+    return JsonResponse(message)
+
+
+
+# takip et / etme
+@login_required(login_url="login-view")
+def Takip(request, userId):
+
+    message = {}
+
+    try:
+
+        user = User.objects.get(id = int(userId))
+
+        userInstance = UserFollowers.objects.filter(user = user).first()
+
+        # instance oluştur
+        if userInstance is None:
+             
+            userInstance = UserFollowers.objects.create(user = user)
+            request.user.followers.add(userInstance)
+
+            message["api_message"] = {
+
+                "status": "eklendi",
+                "message": f"{user.username} takipçi listenize eklendi"
+            }
+
+        else:
+            # zaten takip ediliyor mu?
+            request.user.followers.remove(userInstance)
+            userInstance.delete()
+            
+            message["api_message"] = {
+
+                "status": "çıkarıldı",
+                "message": f"{user.username} takipçi listenizden çıkarıldı"
+            }
+
+    except Exception as error:
+
+            print("FOLLOW API HATA:", error)
+
+            message["api_message"] = {
+
+            "status": "hata",
+            "message": "Bir şeyler ters gitti, Lütfen daha sonra tekrar deneyiniz"
+        }
+            
+
     return JsonResponse(message)

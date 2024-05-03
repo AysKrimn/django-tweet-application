@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 
 from tweetApp.views import *
-from tweetAPI.views import Begen
+from tweetAPI.views import *
 
 
 # django config ayarları
@@ -34,6 +34,7 @@ urlpatterns = [
     path("tweet/<tweetId>", TweetDetay, name="tweet-detail-view"),
     path("tweet/<tweetId>/yorum-yap", TweetYorum, name="tweet-comment-view"),
     path("users/<userId>", ProfilDetay, name="user-view"),
+    path("users/<userId>/ban", ProfilYasakla, name="ban-view"),
     path("giris-yap", GirisYap, name="login-view"),
     path("cikis-yap", CikisYap, name="logout-view"),
     path("kayit-ol", KayitOl, name="register-view"),
@@ -41,6 +42,7 @@ urlpatterns = [
 
     # API ENDPOINTS
     path("api/tweet/<tweetId>/begen", Begen, name="tweet-like-view"),
+    path("api/user/followers/add/<userId>", Takip, name="follower-add-view"),
 
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

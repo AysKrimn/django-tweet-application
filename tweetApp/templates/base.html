@@ -113,10 +113,39 @@
                           </div>
                     
                           <a class="username" href="{% url 'user-view' user.id %}">{{user.username}}</a>
+
+                          <div class="contact-container">
+                                <button onclick="make_follow_request(event, '{{user.id}}')">Takip Et</button>
+                          </div>
                         </div>
                     
                         {% endfor %}
                         
+                    
+                    <div class="mt-5">
+                        <h5 class="text-center">Takip Etmek İsteyebileceğiniz Kişiler</h5>
+                        <hr>
+
+                        {% for user in random_users  %}
+                          
+                       
+                        <div class="d-flex align-items-center avatar-container">
+                    
+                            <div>
+                                <img src="{{user.avatar.url}}" alt="Avatar">
+                            </div>
+                      
+                            <a class="username" href="{% url 'user-view' user.id %}">{{user.username}}</a>
+  
+                            <div class="contact-container">
+                                  <button onclick="make_follow_request(event, '{{user.id}}')">Takip Et</button>
+                            </div>
+                          </div>
+                      
+                        {% endfor %}
+                    </div>
+                 
+
                     </div>
 
 
@@ -225,5 +254,9 @@
     }
 
 </script>
+
+<script src="{% static 'Scripts/follow_user.js' %}"></script>
+
+
 </body>
 </html>

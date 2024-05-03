@@ -1,3 +1,32 @@
+.user-profile p {
+
+    margin-bottom: 3px;
+}
+
+.contact-container {
+
+    flex: 1;
+    text-align: end;
+}
+
+.contact-container button {
+
+    border: 1px solid !important;
+    font-size: 14px !important;
+    background: transparent;
+    border-radius: 2px;
+    transition: 0.1s;
+    min-width: 70px;
+}
+
+.contact-container button:hover {
+
+    color: rgb(44, 131, 245);
+    /* font-weight: bold; */
+    letter-spacing: 1px;
+
+}
+
 .heart {
     font-size: 21px;
     cursor: pointer;
@@ -124,6 +153,9 @@
     padding: 8px;
     gap: 8px;
 }
+
+
+
 
 
 .username {

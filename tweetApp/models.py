@@ -20,7 +20,36 @@ class TweetUser(AbstractUser):
     location = models.CharField(("Yaşadığı Yer"), max_length=50, blank=True, null=True)
     relation = models.CharField(("İlişki Durumu"), max_length=50, choices=iliski_durumu_secenekler, null=True, blank=True)
     followers = models.ManyToManyField("tweetApp.UserFollowers", verbose_name=("Takipçiler"))
+    isBanned = models.BooleanField(("Yasaklı"), default=False)
 
+
+    def get_user_location(self):
+         
+         if self.location:
+              return self.location
+         else: 
+              return "Belirtilmedi"
+         
+    def get_relation_status(self):
+         
+         if self.relation:
+              return self.relation[0][0]
+         else: 
+              return "Belirtilmedi"
+         
+    def get_birthdate(self):
+         
+        if self.birthday:
+              return self.birthday
+        else: 
+              return "Belirtilmedi"
+
+# ban modeli
+class BanRecord(models.Model):
+     
+     authorized = models.ForeignKey(TweetUser, related_name="banned_from", verbose_name=("Banlayan"), on_delete=models.CASCADE)
+     suspect = models.ForeignKey(TweetUser, verbose_name=("Banlanan"), on_delete=models.CASCADE)
+     reason = models.CharField(("Sebep"), max_length=50)
 
 # takipci
 class UserFollowers(models.Model):
