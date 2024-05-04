@@ -16,7 +16,7 @@ def get_current_recent_users(request):
 def get_user_tweet_count(request):
 
             if request.user.is_authenticated is False:
-                    return
+                    return {"user_tweets_count": 0} 
             
             tweets = TweetModel.objects.all()    
             tweetCount = tweets.filter(author = request.user).count()
@@ -29,11 +29,11 @@ def get_user_tweet_count(request):
 def recommend_random_users(request):
     randomUsers = { "random_users": [] }
     
-    # Rastgele 4 user öner
+    # Rastgele 3 user öner
     all_users = User.objects.all()
 
-    i = 1
-    while i < 4:
+    i = 0
+    while i < 3:
 
         if all_users.count() <= i:
             break
@@ -50,4 +50,6 @@ def recommend_random_users(request):
         randomUsers["random_users"].append(user)
         i += 1
 
-    return randomUsers
+
+
+        return randomUsers
