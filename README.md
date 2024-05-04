@@ -6,6 +6,8 @@ Basit, çeşitli özellikler sunan insanların **X** uygulamasın da olduğu gib
 + Kişiselleştirilmiş user modeli avatar, yaşadığı yer, ilişki durumu vb gibi alanlar doğrudan kişiselleştirilmiş user modelinin içinde depolanmaktadır böylece request objesi içinden bu verilere doğrudan erişilebilir.
 + Role permissions, topluluktaki üyeler 2 kısma ayrılır normal kullanıcı ve admin / moderator. Yetkili olan kişiler tweetleri askıya alabilir kullanıcıları banlayabilir. Kısacası moderasyondan sorumludurlar.
 + 24 saat içinde kayıt olan kişilerin diğer kullanıcılara gösterilmesi
++ Takipleşme sistemi userler diledikleri kişilerle takipleşebilirler
++ Gönderilere yorum ve beğeni atma
 
 # Önizlemeler
 ![image](https://github.com/AysKrimn/django-tweet-application/assets/83617943/0ec79b6e-fa4e-40dd-893b-f97ae4c6f1f1)
@@ -38,7 +40,3 @@ Hesap Düzenleme Kısmı
 
 
 
-# Todo
-+ Tweet box'a emoji entegre etme
-+ Permission sistemi
-+ Takipleşme ve like / comment yapmak
