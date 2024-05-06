@@ -1,6 +1,6 @@
 from .models import TweetLikes
 from tweetApp.models import TweetUser as User
-from tweetApp.models import UserFollowers
+from tweetApp.models import UserFollowers, TweetModel
 
 # JSON kütüphanesi
 from django.http import JsonResponse
@@ -17,12 +17,15 @@ def Begen(request, tweetId):
 
     try:
         # bu user bu postu daha önce beğenmiş mi?
-        isLiked = TweetLikes.objects.filter(post_id = int(tweetId), user=request.user).first()
-
+        isLikedTweet = TweetLikes.objects.filter(post_id = int(tweetId), user=request.user).first()
+        instance = TweetModel.objects.get(id = int(tweetId))
+      
         # kişi bu postu zaten beğenmişse o zaman like kaldır.
-        if isLiked:
+        if isLikedTweet:
             
-            isLiked.delete()
+            instance.tweetLikes.remove(isLikedTweet)
+
+            isLikedTweet.delete()
 
             message["api_message"] = {
 
@@ -33,7 +36,10 @@ def Begen(request, tweetId):
         else:
             
             # like oluştur
-            tweet = TweetLikes.objects.create(post_id = int(tweetId), user = request.user)
+         
+            liked_tweet = TweetLikes.objects.create(post_id = int(tweetId), user = request.user)
+            instance.tweetLikes.add(liked_tweet)
+            
             message["api_message"] = {
 
                 "status": "Like Eklendi",

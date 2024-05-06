@@ -10,6 +10,9 @@ from .form import UserProfile
 # utils
 from datetime import datetime, timedelta
 # Create your views here.
+
+
+
 def Anasayfa(request):
     context = {}
     tweetInstances = {}
@@ -173,15 +176,21 @@ def TweetDetay(request, tweetId):
     try:
 
         tweet = TweetModel.objects.filter(id = int(tweetId)).first()
-
+            
         if tweet is None:
             # eğer böyle bi tweet yoksa
             return redirect("index-view")
         
         context["tweet"] = {
 
-            "data": tweet
+            "data": tweet,
+           
         }
+        # kullanıcı login olmuşsa bu postu begenmis mi diye bak
+        if request.user.is_authenticated:
+
+                context.setdefault("isLiked", TweetLikes.objects.filter(post_id = tweet.id, user = request.user).exists())
+            
     except:
         return redirect("index-view")
     

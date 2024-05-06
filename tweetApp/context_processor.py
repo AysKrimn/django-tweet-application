@@ -14,14 +14,22 @@ def get_current_recent_users(request):
 
 
 def get_user_tweet_count(request):
-
+            
+            # user login değilse hepsini 0 olarak ayarla
             if request.user.is_authenticated is False:
-                    return {"user_tweets_count": 0} 
+                    return {"user_tweets_count": 0, "user_total_likes": 0} 
             
             tweets = TweetModel.objects.all()    
-            tweetCount = tweets.filter(author = request.user).count()
+            tweetCount = tweets.filter(author = request.user)
+            
+            total_likes = 0
+            for tweet in tweetCount:
+                
+                print("GELEN TWEEET:", tweet.tweetLikes)
+                total_likes += tweet.tweetLikes.count()
+
             # userin toplam tweet sayısı
-            return {"user_tweets_count": tweetCount} 
+            return {"user_tweets_count": tweetCount.count(), "user_total_likes": total_likes} 
 
 
 

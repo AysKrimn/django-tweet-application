@@ -9,4 +9,4 @@ class TweetLikes(models.Model):
 
 
     def __str__(self) -> str:
-        return self.post.tweet
+        return self.user.username

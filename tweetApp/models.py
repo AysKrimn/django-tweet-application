@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from tweetAPI.models import TweetLikes
 
+
 class TweetUser(AbstractUser):
 
     iliski_durumu_secenekler = (
@@ -66,7 +67,7 @@ class TweetModel(models.Model):
     # id
     author = models.ForeignKey(TweetUser, verbose_name=("Tweet Yazarı"), on_delete=models.CASCADE)
     tweet = models.TextField(("Tweet"))
-    tweetLikes = models.ForeignKey("tweetAPI.TweetLikes", verbose_name=("Beğeniler"), on_delete=models.CASCADE, null=True)
+    tweetLikes = models.ManyToManyField("tweetAPI.TweetLikes", verbose_name=("Beğeniler"), blank=True)
     attachment = models.FileField(("Ek"), upload_to="Tweet_Uploads", max_length=100, blank=True)   # """blank = True = Opsiyonel"""
     createdAt = models.DateTimeField(("Tarih"), auto_now=True, auto_now_add=False)
     updatedAt = models.DateTimeField(("Güncellenme Tarih"), auto_now=False, auto_now_add=True)
